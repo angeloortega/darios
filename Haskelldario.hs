@@ -36,7 +36,8 @@ inicialesVacias cantidad resultado --Algoritmo que genera la cantidad de casilla
 generarCuerpo fecha maximo posicion resultado --Funcion para crear un calendario recursivamente
     | (fecha > maximo) &&  (posicion > 7) = resultado ++ "|"
     | (fecha > maximo) = (generarCuerpo fecha maximo (posicion + 1) (resultado ++ "|__"))
-    | posicion > 7 = (generarCuerpo (fecha + 1) maximo 1 (resultado ++ "|\n"))
+    | (posicion > 7) && (fecha < 10) = (generarCuerpo (fecha + 1) maximo 2 (resultado ++ "|\n|_" ++ (show fecha)))
+    | (posicion > 7) && (fecha > 10) = (generarCuerpo (fecha + 1) maximo 2 (resultado ++ "|\n|" ++ (show fecha)))
     | fecha < 10 = (generarCuerpo (fecha + 1) maximo (posicion + 1) (resultado ++ "|_" ++ (show fecha)))
     | otherwise = (generarCuerpo (fecha + 1) maximo (posicion + 1) (resultado ++ "|" ++ (show fecha)))
 
@@ -161,6 +162,7 @@ getCandidadDiasMes mes year --Obtiene la cantidad de meses de un anho
     | (mes <8)&&((mes `mod` 2) == 0) = 30
     | (mes < 8) = 31
     | (mes >= 8) && ((mes `mod` 2) == 0) = 31
+    | (mes > 8) = 30
     | otherwise = 31
 
 fechaNormalAFechaBase :: Int -> Int -> Int -> Int -> Int -> String
